@@ -1,18 +1,13 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
+import "./App.css"; // Make sure this includes your Tailwind imports
+import Products from "./pages/Products";
 
 function App() {
-    const [count, setCount] = useState(0);
-
-    return (
-        <>
-            <h1 className="text-3xl font-bold text-red-500 underline">
-                Hello world!
-            </h1>
-        </>
-    );
+  return (
+    <div className="font-sans min-h-screen flex flex-col bg-white">
+      <Products />
+    </div>
+  );
 }
 
 export default App;
