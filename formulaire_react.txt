@@ -1,0 +1,74 @@
+// Front end
+
+import { useForm } from "react-hook-form";
+import ProductsApi from "../services/productsApi";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  name: yup.string().required("Le nom du produit est obligatoire"),
+  price: yup.number().required().positive("Le prix doit être positif"),
+  size: yup.string().required("La taille est obligatoire"),
+  sex: yup.string().oneOf(["male", "female", "other"]).required("Le sexe est obligatoire"),
+  description: yup.string().required("La description est obligatoire"),
+}).required();
+
+const ProductForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const navigate = useNavigate();
+
+  const onSubmit = (data) => {
+    ProductsApi.addProduct(data)
+      .then(() => navigate("/products"))
+      .catch((error) => console.error("Erreur :", error));
+  };
+
+  return (
+    <>
+      <h1>Ajouter un produit</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input {...register("name")} placeholder="Nom du produit" />
+        {errors.name && <p>{errors.name.message}</p>}
+
+        <input type="number" {...register("price")} placeholder="Prix" />
+        {errors.price && <p>{errors.price.message}</p>}
+
+        <input {...register("size")} placeholder="Taille" />
+        {errors.size && <p>{errors.size.message}</p>}
+
+        <select {...register("sex")}>
+          <option value="male">Homme</option>
+          <option value="female">Femme</option>
+          <option value="other">Autre</option>
+        </select>
+        {errors.sex && <p>{errors.sex.message}</p>}
+
+        <textarea {...register("description")} placeholder="Description"></textarea>
+        {errors.description && <p>{errors.description.message}</p>}
+
+        <button type="submit">Créer le produit</button>
+      </form>
+    </>
+  );
+};
+
+export default ProductForm;
+
+
+
+
+//front end i guess
+
+
+import axios from "axios";
+
+const API_URL = "http://localhost:3000/api/products"; // Assure-toi que c'est bien l'URL de ton backend
+
+const addProduct = async (productData) => {
+  return await axios.post(API_URL, productData);
+};
+
+export default {
+  addProduct,
+};
