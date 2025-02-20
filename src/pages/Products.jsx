@@ -6,9 +6,7 @@ import HeroSection from "../components/HeroSection";
 function Products() {
     return (
         <div className="font-sans min-h-screen flex flex-col">
-            <Header />
             <HeroSection />
-            <Footer />
         </div>
     );
 }

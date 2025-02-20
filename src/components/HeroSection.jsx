@@ -3,11 +3,13 @@ import { useQuery } from "react-query";
 import { fetchAllProducts } from "../services/productService";
 import BigCard from "./BigCard";
 import SmallCard from "./SmallCard";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
   // Pagination state: current page (default 1)
   const [page, setPage] = useState(1);
   const limit = 10; // 10 products per page
+  const navigate = useNavigate()
 
   // React Query to fetch paginated products
   const { data: products, isLoading, error } = useQuery(
@@ -38,7 +40,8 @@ export default function HeroSection() {
   }
 
   const handleCardClick = (product) => {
-    alert(`Clicked on ${product.name} - Price: ${product.price}€`);
+    // Navigate to product detail page using product id.
+    navigate(`/products/${product._id || product.id}`);
   };
 
   return (

@@ -1,16 +1,21 @@
-// src/main.jsx
 import React from "react";
-import ReactDOM, { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
 
-createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </React.StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+        <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </QueryClientProvider>
+        </AuthProvider>
+    </React.StrictMode>
 );
