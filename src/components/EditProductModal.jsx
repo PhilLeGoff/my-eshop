@@ -5,8 +5,6 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { updateProduct } from "../services/productService";
 
-// Extend the schema to optionally include an image file.
-// Note: yup.mixed() is used for files.
 const schema = yup.object({
   name: yup.string().required("Le nom du produit est obligatoire"),
   price: yup
@@ -41,7 +39,6 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    // Create a FormData object to include text fields and file (if provided)
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("price", data.price);
@@ -49,7 +46,6 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
     formData.append("sex", data.sex);
     formData.append("description", data.description);
 
-    // If a new image is selected, append it
     if (data.image && data.image.length > 0) {
       formData.append("image", data.image[0]);
     }
@@ -58,7 +54,6 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
       .then((updatedProduct) => {
         onUpdated(updatedProduct);
         onClose();
-        // Optionally navigate away
       })
       .catch((error) =>
         console.error("Erreur lors de la mise à jour :", error)
@@ -148,7 +143,7 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-black text-white rounded hover:bg-gray-700"
             >
               Confirm
             </button>

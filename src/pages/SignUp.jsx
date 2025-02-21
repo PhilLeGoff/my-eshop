@@ -15,11 +15,9 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // registerUser sends data to backend and returns { token, user }
       const response = await registerUser({ name, email, password, isAdmin });
       setUser(response.user);
 
-      // Navigate based on role
       if (response.user.isAdmin) {
         navigate("/admin/dashboard");
       } else {

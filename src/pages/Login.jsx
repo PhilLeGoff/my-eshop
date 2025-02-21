@@ -13,11 +13,9 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // loginUser sends credentials to backend and returns { token, user }
       const response = await loginUser({ email, password });
-      setUser(response.user); // store the user object in context
+      setUser(response.user);
 
-      // Navigate based on role: admin vs regular user
       if (response.user.isAdmin) {
         navigate("/admin/dashboard");
       } else {

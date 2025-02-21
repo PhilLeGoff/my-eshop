@@ -54,20 +54,19 @@ export default function HeroSection() {
       await addProductToBasket(user._id, product._id || product.id);
       alert("Product added to basket!");
     } catch (err) {
-      // Assuming the service throws an error with a meaningful message
       alert(err.message);
     }
   };
 
   return (
-    <section className="p-4">
+    <section className="">
       {rows.map((row, rowIndex) => (
         <div
           key={rowIndex}
           className={
             row.type === "big"
-              ? "grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"
-              : "grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
+              ? "grid grid-cols-1 md:grid-cols-2 mb-2"
+              : "grid grid-cols-1 md:grid-cols-3 gap-2 mb-2 px-2"
           }
         >
           {row.items.map((product, idx) =>
@@ -91,7 +90,7 @@ export default function HeroSection() {
       ))}
 
       {/* Pagination Controls */}
-      <div className="flex justify-center items-center space-x-4 mt-4">
+      <div className="flex justify-center items-center space-x-4 mt-4 mb-4">
         <button
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}

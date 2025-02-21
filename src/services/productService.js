@@ -71,6 +71,11 @@ export async function deleteProduct(productId) {
   }
 }
 
+/**
+ * Creates a product.
+ * @param {Object} productData - The updated product data.
+ * @returns {Promise<Object>} The updated product.
+ */
 export async function addProduct(productData) {
   try {
     return await axios.post(`${API_URL}/api/products/`, productData, {

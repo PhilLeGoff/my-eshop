@@ -5,8 +5,8 @@ import Signup from "../pages/SignUp";
 import Products from "../pages/Products";
 import ProductDetail from "../pages/ProductDetail";
 import AdminDashboard from "../pages/AdminDashboard";
-import ProtectedRoute from "../components/ProtectedRoute";
 import AdminRoute from "../components/AdminRoute";
+import DefaultRoute from "../components/DefaultRoute";
 
 export default function AppRoutes() {
   return (
@@ -15,12 +15,12 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
-      {/* Protected Routes (any logged-in user can access) */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<Products />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
-      </Route>
+      {/* Default Route: Redirects based on user role */}
+      <Route path="/" element={<DefaultRoute />} />
+
+      {/* Public Product Routes */}
+      <Route path="/products" element={<Products />} />
+      <Route path="/products/:id" element={<ProductDetail />} />
 
       {/* Admin Routes (only admins can access) */}
       <Route element={<AdminRoute />}>

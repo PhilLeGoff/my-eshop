@@ -14,21 +14,18 @@ export default function AdminProductCard({ product, onClick, onDelete }) {
         alt={product.name}
         className="w-full h-full object-cover rounded shadow-md"
       />
-      {/* Trash Icon Overlay at Top Right */}
       <button
         onClick={(e) => {
           e.stopPropagation();
           onDelete(product);
         }}
-        className="absolute top-2 right-2 bg-white bg-opacity-80 p-1 rounded-full hover:bg-opacity-100"
+        className="absolute top-2 right-2 bg-transparent bg-opacity-80 p-1 rounded-full"
       >
         <FontAwesomeIcon icon={faTrash} className="text-red-500" />
       </button>
-      {/* Product Name at Bottom Left */}
       <div className="absolute bottom-2 left-2 text-white text-sm font-semibold bg-black/50 px-2 py-1 rounded">
         {product.name}
       </div>
-      {/* Product Price at Bottom Right */}
       <div className="absolute bottom-2 right-2 text-white text-sm font-semibold bg-black/50 px-2 py-1 rounded">
         {product.price}€
       </div>

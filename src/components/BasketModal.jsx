@@ -15,7 +15,6 @@ export default function BasketModal({ userId, onClose, onDelete }) {
   return (
     <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative bg-white p-6 rounded shadow-lg w-11/12 max-w-lg">
-        {/* Close button as a Font Awesome X icon */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 bg-white border-none text-black hover:text-red-500"

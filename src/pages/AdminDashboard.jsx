@@ -5,9 +5,11 @@ import AdminProductCard from "../components/AdminProductCard";
 import EditProductModal from "../components/EditProductModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminDashboard() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate()
   const { data: products, isLoading, error } = useQuery("adminProducts", () =>
     fetchAllProducts(1, 1000)
   );
@@ -36,8 +38,7 @@ export default function AdminDashboard() {
   };
 
   const handleEditClick = (product) => {
-    setSelectedProduct(product);
-    setShowEditModal(true);
+    navigate(`/products/${product._id}`)
   };
 
   if (isLoading) {
@@ -54,7 +55,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
       {products && products.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
