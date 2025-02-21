@@ -97,7 +97,7 @@ This is the frontend repository for IPSSI'SHOP, a full-stack e-commerce applicat
 
     Create a .env file in the frontend folder with the following content:
 
-VITE_API_URL=http://localhost:3000/api
+VITE_API_URL=http://localhost:3000/
 
 Install Dependencies:
 
