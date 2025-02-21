@@ -1,4 +1,4 @@
-```markdown
+
 # IPSSI'SHOP Frontend
 
 This is the frontend repository for IPSSI'SHOP, a full-stack e-commerce application. The frontend is built with React, using React Query, React Router, Tailwind CSS, and React Hook Form with yup for form validation.
