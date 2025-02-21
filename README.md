@@ -26,7 +26,58 @@ This is the frontend repository for IPSSI'SHOP, a full-stack e-commerce applicat
 
 ## Project Structure
 
-frontend/ ├── src/ │ ├── assets/ │ │ ├── default.jpg │ │ └── dress.png # Favicon or custom tab picture │ ├── components/ │ │ ├── AddProductModal.jsx │ │ ├── AdminProductCard.jsx │ │ ├── BasketModal.jsx │ │ ├── DefaultRoute.jsx │ │ ├── EditProductModal.jsx │ │ ├── Header.jsx │ │ ├── ProtectedRoute.jsx │ │ ├── AdminRoute.jsx │ │ └── VerySmallCard.jsx │ ├── context/ │ │ └── AuthContext.js │ ├── pages/ │ │ ├── AdminDashboard.jsx │ │ ├── Login.jsx │ │ ├── ProductDetail.jsx │ │ ├── Products.jsx │ │ └── SignUp.jsx │ ├── routes/ │ │ └── AppRoutes.jsx │ ├── services/ │ │ ├── productService.js │ │ ├── productsApi.js │ │ └── userService.js │ ├── App.jsx │ ├── index.css │ └── main.jsx ├── package.json └── .env
+        .
+    ├── eslint.config.js
+    ├── index.html
+    ├── package.json
+    ├── package-lock.json
+    ├── postcss.config.js
+    ├── public
+    │   └── vite.svg
+    ├── README.md
+    ├── src
+    │   ├── App.css
+    │   ├── App.jsx
+    │   ├── assets
+    │   │   ├── default.jpg
+    │   │   ├── dress.png
+    │   │   └── react.svg
+    │   ├── components
+    │   │   ├── AddProductModal.jsx
+    │   │   ├── AdminProductCard.jsx
+    │   │   ├── AdminRoute.jsx
+    │   │   ├── BasketModal.jsx
+    │   │   ├── BigCard.jsx
+    │   │   ├── DefaultRoute.jsx
+    │   │   ├── EditProductModal.jsx
+    │   │   ├── Footer.jsx
+    │   │   ├── Header.jsx
+    │   │   ├── HeroSection.jsx
+    │   │   ├── ProtectedRoute.jsx
+    │   │   ├── SmallCard.jsx
+    │   │   └── VerySmallCard.jsx
+    │   ├── context
+    │   │   └── AuthContext.jsx
+    │   ├── index.css
+    │   ├── main.jsx
+    │   ├── pages
+    │   │   ├── AdminDashboard.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── ProductDetail.jsx
+    │   │   ├── Products.jsx
+    │   │   └── SignUp.jsx
+    │   ├── routes
+    │   │   └── AppRoutes.jsx
+    │   └── services
+    │       ├── authService.js
+    │       ├── productService.js
+    │       └── userService.js
+    ├── tailwind.config.js
+    ├── uploads
+    ├── vite.config.js
+    └── yarn.lock
+
+
 
 
 ## Prerequisites
