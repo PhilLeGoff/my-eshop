@@ -93,9 +93,9 @@ This is the frontend repository for IPSSI'SHOP, a full-stack e-commerce applicat
    git clone https://your-frontend-repo-url.git
    cd frontend
 
-    Set Up Environment Variables:
+Set Up Environment Variables:
 
-    Create a .env file in the frontend folder with the following content:
+Create a .env file in the frontend folder with the following content:
 
 VITE_API_URL=http://localhost:3000/
 
