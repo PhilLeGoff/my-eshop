@@ -1,0 +1,13 @@
+.product-cloths {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .product-cloths img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
