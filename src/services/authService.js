@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
  */
 export async function loginUser(credentials) {
   try {
-    const response = await axios.post(`${API_URL}/auth/login`, credentials);
+    const response = await axios.post(`${API_URL}/api/auth/login`, credentials);
     return response.data;
   } catch (error) {
     console.error("loginUser error:", error);
@@ -24,7 +24,7 @@ export async function loginUser(credentials) {
  */
 export async function registerUser(userData) {
   try {
-    const response = await axios.post(`${API_URL}/auth/register`, userData);
+    const response = await axios.post(`${API_URL}/api/auth/register`, userData);
     return response.data;
   } catch (error) {
     console.error("registerUser error:", error);

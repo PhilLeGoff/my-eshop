@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { fetchProductsByQuery } from "../services/productService";
+import { fetchProductsByQuery, fetchProductById } from "../services/productService";
 import VerySmallCard from "./VerySmallCard";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { removeProductFromBasket } from "../services/userService";
+import BasketModal from "./BasketModal"; // Existing basket modal
+import AddProductModal from "./AddProductModal"; // New product form modal
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +17,10 @@ export default function Header() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
 
+  // State for modals
+  const [showBasketModal, setShowBasketModal] = useState(false);
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+
   useEffect(() => {
     // If query is empty, clear results and hide popup.
     if (searchQuery.trim() === "") {
@@ -19,10 +28,8 @@ export default function Header() {
       setShowResults(false);
       return;
     }
-
     // Clear any existing timer.
     if (timerRef.current) clearTimeout(timerRef.current);
-
     // Set a new timer to fetch results after 1 second.
     timerRef.current = setTimeout(() => {
       fetchProductsByQuery(searchQuery)
@@ -36,7 +43,6 @@ export default function Header() {
           setShowResults(false);
         });
     }, 1000);
-
     // Cleanup on unmount or query change.
     return () => clearTimeout(timerRef.current);
   }, [searchQuery]);
@@ -49,8 +55,30 @@ export default function Header() {
 
   const handleLogout = () => {
     setUser(null);
-    // Optionally, clear any stored tokens here.
     navigate("/login");
+  };
+
+  const handleBasketClick = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setShowBasketModal(true);
+  };
+
+  const handleDeleteFromBasket = async (product) => {
+    if (!user) return;
+    try {
+      await removeProductFromBasket(user._id, product._id || product.id);
+      const updatedBasket = user.basket.filter(
+        (id) => id !== (product._id || product.id)
+      );
+      setUser({ ...user, basket: updatedBasket });
+      alert("Product removed from basket.");
+    } catch (err) {
+      console.error("Error removing product from basket:", err);
+      alert(err.message || "Failed to remove product from basket.");
+    }
   };
 
   return (
@@ -59,19 +87,13 @@ export default function Header() {
       <div className="text-xl font-bold text-black">my_eshop</div>
 
       {/* Navigation Links */}
-      <nav className="hidden md:block space-x-4">
-        <a href="#" className="hover:underline">
-          Homme
-        </a>
-        <a href="#" className="hover:underline">
-          Femme
-        </a>
-        <a href="#" className="hover:underline">
-          Other
-        </a>
-      </nav>
+      {/* <nav className="hidden md:block space-x-4">
+        <a href="#" className="hover:underline">Homme</a>
+        <a href="#" className="hover:underline">Femme</a>
+        <a href="#" className="hover:underline">Other</a>
+      </nav> */}
 
-      {/* Search & Conditional Button */}
+      {/* Search & Conditional Buttons */}
       <div className="flex items-center space-x-4">
         <div className="relative">
           <input
@@ -83,11 +105,18 @@ export default function Header() {
           />
         </div>
         {user && user.isAdmin ? (
-          <button className="relative px-2 py-1 bg-black text-white rounded hover:opacity-80">
+          <button
+            onClick={() => setShowAddProductModal(true)}
+            className="relative flex items-center px-2 py-1 bg-black text-white rounded hover:opacity-80"
+          >
+            <FontAwesomeIcon icon={faPlus} className="mr-1" />
             Nouveau produit
           </button>
         ) : (
-          <button className="relative px-2 py-1 bg-black text-white rounded hover:opacity-80">
+          <button
+            onClick={handleBasketClick}
+            className="relative px-2 py-1 bg-black text-white rounded hover:opacity-80"
+          >
             Basket
           </button>
         )}
@@ -112,6 +141,20 @@ export default function Header() {
             ))}
           </div>
         </div>
+      )}
+
+      {/* Render Basket Modal Component */}
+      {showBasketModal && user && (
+        <BasketModal
+          userId={user._id}
+          onClose={() => setShowBasketModal(false)}
+          onDelete={handleDeleteFromBasket}
+        />
+      )}
+
+      {/* Render Add Product Modal Component for Admins */}
+      {showAddProductModal && user && user.isAdmin && (
+        <AddProductModal onClose={() => setShowAddProductModal(false)} />
       )}
     </header>
   );

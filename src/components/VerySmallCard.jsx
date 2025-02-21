@@ -1,5 +1,7 @@
 import defaultImage from '../assets/default.jpg';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
 export default function VerySmallCard({ product, onClick }) {
   return (
     <div
@@ -7,7 +9,7 @@ export default function VerySmallCard({ product, onClick }) {
       className="w-32 h-32 relative cursor-pointer flex-shrink-0"
     >
       <img
-        src={defaultImage}
+        src={product.imageUrl ? `${API_URL}/${product.imageUrl}` : defaultImage}
         alt={product.name}
         className="w-full h-full object-cover"
       />

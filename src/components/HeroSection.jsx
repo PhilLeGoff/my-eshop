@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useQuery } from "react-query";
 import { fetchAllProducts } from "../services/productService";
 import BigCard from "./BigCard";
 import SmallCard from "./SmallCard";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { addProductToBasket } from "../services/userService"; // Service that calls backend
 
 export default function HeroSection() {
   // Pagination state: current page (default 1)
   const [page, setPage] = useState(1);
   const limit = 10; // 10 products per page
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   // React Query to fetch paginated products
   const { data: products, isLoading, error } = useQuery(
@@ -22,8 +25,6 @@ export default function HeroSection() {
   if (error) return <div className="p-4">Error fetching products</div>;
 
   // Organize products into alternating rows.
-  // We use a repeating pattern: first row "big" (2 items), then "small" (3 items)
-  // This pattern consumes 5 products per cycle.
   const rows = [];
   let index = 0;
   const pattern = [2, 3]; // Big row uses 2 items, small row uses 3 items.
@@ -44,6 +45,20 @@ export default function HeroSection() {
     navigate(`/products/${product._id || product.id}`);
   };
 
+  const handleAddToBasket = async (product) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    try {
+      await addProductToBasket(user._id, product._id || product.id);
+      alert("Product added to basket!");
+    } catch (err) {
+      // Assuming the service throws an error with a meaningful message
+      alert(err.message);
+    }
+  };
+
   return (
     <section className="p-4">
       {rows.map((row, rowIndex) => (
@@ -57,9 +72,19 @@ export default function HeroSection() {
         >
           {row.items.map((product, idx) =>
             row.type === "big" ? (
-              <BigCard key={idx} product={product} onClick={() => handleCardClick(product)} />
+              <BigCard
+                key={idx}
+                product={product}
+                onClick={() => handleCardClick(product)}
+                onAddToBasket={() => handleAddToBasket(product)}
+              />
             ) : (
-              <SmallCard key={idx} product={product} onClick={() => handleCardClick(product)} />
+              <SmallCard
+                key={idx}
+                product={product}
+                onClick={() => handleCardClick(product)}
+                onAddToBasket={() => handleAddToBasket(product)}
+              />
             )
           )}
         </div>
